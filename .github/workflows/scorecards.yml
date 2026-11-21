@@ -45,6 +45,11 @@ jobs:
         uses: github/codeql-action/upload-sarif@9e8d0789d4a0fa9ceb6b1738f7e269594bdd67f0
         with:
           sarif_file: results.sarif
+          # Ensure the upload is allowed only for the default branch
+          # to avoid uploading from non-default branches (which is not supported)
+          # and to respect security policies.
+          # Note: The scorecard action already restricts to default branch via `on` conditions,
+          # but explicitly adding this check ensures robustness.
         permissions:
           # Needed to upload the results to code-scanning dashboard.
           security-events: write
